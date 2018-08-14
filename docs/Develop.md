@@ -2,8 +2,9 @@
 
 1. Clone git repository: `git clone git@github.com:kleinech/ultimate-comparison-ui.git`
 2. Install: `npm install`
-3. Build dist (necessary electron development to find assets): `npm run build`
-4. Start app: `npm start`
+3. Install angular cli: `npm install -g @angular/cli`
+4. Build dist (necessary electron development to find assets): `npm run build`
+5. Start app: `npm start`
 
 ## Synchronize with ultimate-comparison-BASE
 
