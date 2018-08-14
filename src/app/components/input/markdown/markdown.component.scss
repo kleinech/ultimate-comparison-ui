@@ -1,0 +1,25 @@
+:host {
+  background-color: white;
+  display: block;
+}
+
+.container {
+  display: grid;
+  grid-template-areas: "name  ." "value value";
+  grid-template-columns: 1fr 1fr;
+}
+
+.name {
+  grid-area: name;
+  justify-self: left;
+
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 400;
+  font-family: Verdana, sans-serif;
+}
+
+.value {
+  grid-area: value;
+  display: grid;
+}

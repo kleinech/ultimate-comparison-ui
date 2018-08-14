@@ -1,0 +1,42 @@
+<mat-form-field class="full-width">
+  <input matInput placeholder="Select name" [ngModel]="value.name" (ngModelChange)="changeName($event)">
+</mat-form-field>
+<mat-form-field class="full-width">
+  <textarea matInput placeholder="Select description" [(ngModel)]="value.description"
+            (ngModelChange)="change()"></textarea>
+</mat-form-field>
+<mat-form-field class="full-width">
+  <input matInput placeholder="Select class" [(ngModel)]="value.clazz" (ngModelChange)="change()">
+</mat-form-field>
+
+<mat-form-field class="full-width color-picker">
+  <input matInput placeholder="Select color" [(ngModel)]="value.color" (ngModelChange)="change()">
+  <mcc-color-picker [selectedColor]="value.color"
+                    (change)="value.color = $event; change($event)"
+                    [colorPickerSelectorHeight]="150"
+                    [usedSizeColors]="5"></mcc-color-picker>
+</mat-form-field>
+<mat-form-field class="full-width color-picker">
+  <input matInput placeholder="Select backgroundColor" [(ngModel)]="value.backgroundColor" (ngModelChange)="change()">
+  <mcc-color-picker [selectedColor]="value.backgroundColor"
+                    (change)="value.backgroundColor = $event; change($event)"
+                    [colorPickerSelectorHeight]="150"
+                    [usedSizeColors]="5"></mcc-color-picker>
+</mat-form-field>
+<mat-form-field class="full-width">
+  <input matInput placeholder="Select weight" [(ngModel)]="value.weight" (ngModelChange)="change()">
+</mat-form-field>
+<ng-template [ngIf]="type === 'REPOSITORY'">
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Select min age" [(ngModel)]="value.minAge" (ngModelChange)="change()">
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Select max age" [(ngModel)]="value.maxAge" (ngModelChange)="change()">
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Select min age unit" [(ngModel)]="value.minAgeUnit" (ngModelChange)="change()">
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Select max age unit" [(ngModel)]="value.maxAgeUnit" (ngModelChange)="change()">
+  </mat-form-field>
+</ng-template>

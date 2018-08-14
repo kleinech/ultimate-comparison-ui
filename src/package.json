@@ -1,0 +1,8 @@
+{
+  "name": "ultimate-comparison-ui",
+  "productName": "Ultimate Comparison UI",
+  "version": "2.0.0-alpha.1",
+  "description": "Ui for editing and creating Ultimate Comparisons",
+  "main": "electron.prod.js",
+  "license": "MIT"
+}

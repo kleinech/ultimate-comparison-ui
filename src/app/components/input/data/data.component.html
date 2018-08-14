@@ -1,0 +1,75 @@
+<mat-accordion>
+  <div class="input-box">
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Select name" [(ngModel)]="value.name" (change)="change($event)">
+    </mat-form-field>
+  </div>
+
+  <div class="input-box">
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Select url" [(ngModel)]="value.url" (change)="change($event)">
+    </mat-form-field>
+  </div>
+
+  <mat-expansion-panel class="markdown">
+    <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
+      <mat-panel-title>Select description</mat-panel-title>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      <markdown-input [(value)]="value.description"></markdown-input>
+    </ng-template>
+  </mat-expansion-panel>
+
+  <ng-template ngFor let-dataValue [ngForOf]="criteriaDataValues" let-i="index">
+    <div class="input-box" *ngIf="criteriaDataTypes[i] === 'TEXT'">
+      <mat-form-field class="full-width">
+        <input matInput [placeholder]="'Select '+ dataValue.name" [(ngModel)]="dataValue.text"
+               (change)="change($event)">
+      </mat-form-field>
+    </div>
+
+    <div class="input-box" *ngIf="criteriaDataTypes[i] === 'REPOSITORY'">
+      <mat-form-field class="full-width">
+        <input matInput [placeholder]="'Select '+ dataValue.name" [(ngModel)]="dataValue.url"
+               (change)="change($event)">
+      </mat-form-field>
+    </div>
+
+    <mat-expansion-panel *ngIf="criteriaDataTypes[i]=== 'LABEL'">
+      <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
+        <mat-panel-title>Select {{dataValue.name}}</mat-panel-title>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+        <mat-form-field>
+          <mat-select [formControl]="labels[i]" multiple>
+            <mat-option *ngFor="let labelValue of labelOptions[i]" [value]="labelValue">{{labelValue.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <h3>Details</h3>
+        <mat-accordion>
+          <ng-template ngFor let-label [ngForOf]="criteriaDataValuesLabels[i]">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
+                <mat-panel-title>{{label.name}}</mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-template matExpansionPanelContent>
+                <label>Select tooltip</label>
+                <markdown-input [(value)]="label.tooltip.plain"></markdown-input>
+              </ng-template>
+            </mat-expansion-panel>
+          </ng-template>
+        </mat-accordion>
+      </ng-template>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="markdown" *ngIf="criteriaDataTypes[i]=== 'MARKDOWN'">
+      <mat-expansion-panel-header [expandedHeight]="'32px'" [collapsedHeight]="'32px'">
+        <mat-panel-title>Select {{dataValue.name}}</mat-panel-title>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+        <markdown-input [(value)]="dataValue.text"></markdown-input>
+      </ng-template>
+    </mat-expansion-panel>
+  </ng-template>
+</mat-accordion>

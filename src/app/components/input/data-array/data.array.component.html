@@ -1,0 +1,25 @@
+<mat-toolbar>
+  <span>Data</span>
+  <div class="button-row header-button-row">
+    <button mat-button (click)="addNewDataDialog()">Add new data</button>
+  </div>
+</mat-toolbar>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let dataElement of value; let index = index" (opened)="_open[index]=true"
+                       (closed)="_open[index]=false" [expanded]="_open[index]">
+    <mat-expansion-panel-header (click)="update()">
+      <mat-panel-title>{{dataElement.name}}</mat-panel-title>
+      <mat-panel-description></mat-panel-description>
+    </mat-expansion-panel-header>
+    <data-input [value]="dataElement" [configuration]="configuration"
+                (valueChange)="value[i]=$event; change();"></data-input>
+    <section class="mat-section">
+      <label>Delete data element</label>
+      <button mat-icon-button (click)="delete(index)">
+        <mat-icon aria-label="Delete">delete</mat-icon>
+      </button>
+    </section>
+  </mat-expansion-panel>
+</mat-accordion>
+
+

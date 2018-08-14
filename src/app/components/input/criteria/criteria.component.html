@@ -1,0 +1,78 @@
+<mat-form-field *ngIf="showType" class="full-width">
+  <mat-select placeholder="Select type" [(ngModel)]="value.type" (ngModelChange)="change($event)" (click)="update()"
+              [disabled]="lock['type']">
+    <mat-option *ngFor="let type of types" [value]="type" (click)="update()">
+      {{type}}
+    </mat-option>
+    <mat-option *ngIf="value.type === 'NAME_URL'" [value]="value.type">NAME-URL</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field *ngIf="showId" class="full-width">
+  <input matInput placeholder="Select id" [(ngModel)]="value.id" [disabled]="lock['id']">
+</mat-form-field>
+<mat-form-field class="full-width">
+  <input matInput placeholder="Select name" [(ngModel)]="value.name" (change)="change($event)"
+         [disabled]="lock['name']">
+</mat-form-field>
+<mat-form-field class="full-width">
+  <input matInput placeholder="Select placeholder" [(ngModel)]="value.placeholder" (change)="change($event)"
+         [disabled]="lock['placeholder']">
+</mat-form-field>
+<mat-form-field class="full-width">
+  <input matInput placeholder="Select description" [(ngModel)]="value.description" (change)="change($event)"
+         [disabled]="lock['description']">
+</mat-form-field>
+<section class="checkbox-group">
+  <mat-checkbox [(ngModel)]="value.search" (change)="change()" [labelPosition]="'after'"
+                [disabled]="lock['search']" class="checkbox-margin">
+    Search
+  </mat-checkbox>
+  <mat-checkbox [(ngModel)]="value.table" (change)="change()" [labelPosition]="'after'"
+                [disabled]="lock['table']" class="checkbox-margin">
+    Table
+  </mat-checkbox>
+  <mat-checkbox [(ngModel)]="value.detail" (change)="change()" [labelPosition]="'after'"
+                [disabled]="lock['detail']" class="checkbox-margin">
+    Details
+  </mat-checkbox>
+</section>
+<mat-form-field class="full-width" *ngIf="value.type === 'LABEL'">
+  <input matInput placeholder="Select order" [(ngModel)]="value.order" (change)="change($event)"
+         [disabled]="lock['order']">
+</mat-form-field>
+<section class="checkbox-group" *ngIf="value.type === 'LABEL'">
+  <mat-checkbox [(ngModel)]="value.andSearch" (change)="change()" [labelPosition]="'after'"
+                [disabled]="lock['andSearch']" class="checkbox-margin">
+    And search
+  </mat-checkbox>
+  <mat-checkbox [(ngModel)]="value.rangeSearch" (change)="change()" [labelPosition]="'after'"
+                [disabled]="lock['rangeSearch']" class="checkbox-margin">
+    Range search
+  </mat-checkbox>
+</section>
+
+<mat-toolbar *ngIf="showValues">
+  <span>Criteria values</span>
+  <div class="button-row header-button-row">
+    <button mat-button [disabled]="value.type !== 'LABEL' && value.type !== 'REPOSITORY'" (click)="addCriteriaValue()">
+      Add new value
+    </button>
+  </div>
+</mat-toolbar>
+<mat-accordion *ngIf="showValues">
+  <mat-expansion-panel *ngFor="let criteriaValue of criteriaValues; let index = index; ">
+    <mat-expansion-panel-header (click)="update()">
+      <mat-panel-title>{{criteriaValue.name}}</mat-panel-title>
+    </mat-expansion-panel-header>
+    <section class="mat-spacer"></section>
+    <criteria-value-input [value]="criteriaValue" [type]="type"
+                          (valueChange)="criteriaValueChange($event)"></criteria-value-input>
+    <section class="mat-section">
+      <label>Delete criteria value</label>
+      <button mat-icon-button (click)="deleteValue(criteriaValue.name)">
+        <mat-icon aria-label="Delete">delete</mat-icon>
+      </button>
+    </section>
+  </mat-expansion-panel>
+</mat-accordion>

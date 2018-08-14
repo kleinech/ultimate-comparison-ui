@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Add new criteria</h2>
+<mat-horizontal-stepper linear #stepper>
+  <mat-step [stepControl]="idTypeGroup">
+    <form [formGroup]="idTypeGroup">
+      <ng-template matStepLabel>Choose id and type</ng-template>
+      <div class="content">
+        <mat-form-field>
+          <input matInput placeholder="Select id" formControlName="id" required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Select type" formControlName="type">
+            <mat-option *ngFor="let type of types" [value]="type">
+              {{type}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-dialog-actions>
+          <button mat-raised-button mat-dialog-close>Close</button>
+          <button mat-raised-button matStepperNext>Next</button>
+        </mat-dialog-actions>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Choose additional settings</ng-template>
+    <criteria-input *ngIf="criteria" [value]="criteria" [showType]="false" [showId]="false" [showValues]="true"
+                    (valueChange)="changeCriteria($event)"></criteria-input>
+    <mat-dialog-actions>
+      <button mat-raised-button mat-dialog-close>Close</button>
+      <button mat-raised-button [mat-dialog-close]="criteria">Add</button>
+    </mat-dialog-actions>
+  </mat-step>
+</mat-horizontal-stepper>
+

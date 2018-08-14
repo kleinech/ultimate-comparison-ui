@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Add new Data</h2>
+<mat-dialog-content>
+  <data-input [(value)]="dataElement" [configuration]="data.configuration"></data-input>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close>Close</button>
+  <button mat-raised-button [mat-dialog-close]="dataElement">Add</button>
+</mat-dialog-actions>
+

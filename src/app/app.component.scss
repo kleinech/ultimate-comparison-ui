@@ -1,0 +1,49 @@
+.full-width {
+  width: 100%;
+}
+
+.yaml {
+  background-color: black;
+  padding: 10px;
+}
+
+.json {
+  background-color: grey;
+  padding: 10px;
+}
+
+.space-after {
+  margin-bottom: 10px;
+}
+
+.wrapper {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.wrapper .menu {
+  flex: 0 1 auto;
+}
+
+.wrapper .main-content {
+  flex: 1 1 auto;
+  overflow-y: auto;
+}
+
+.checkbox-group {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.checkbox-group-column {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.checkbox-margin {
+  margin: 0 10px;
+}

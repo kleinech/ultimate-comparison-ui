@@ -1,0 +1,46 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'styles/atom-one-dark.min.css';
+@import 'styles/simplemde.min.css';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import "~material-design-icons/iconfont/material-icons.css";
+
+.mat-expansion-panel-header-title {
+  min-width: 120px;
+  flex-grow: 0 !important;
+}
+
+html, body, app-root {
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+}
+
+body {
+  min-width: 450px;
+}
+
+.mat-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.mat-spacer {
+  display: flex;
+  height: 10px;
+}
+
+.mat-expansion-panel-header {
+  filter: brightness(85%);
+}
+
+.button-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.header-button-row {
+  margin-left: 10px;
+}

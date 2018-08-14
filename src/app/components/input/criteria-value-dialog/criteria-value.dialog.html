@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Add new Criteria Value</h2>
+<criteria-value-input [value]="criteriaValue" (valueChange)="criteriaValue = $event.value"
+                      [type]="type"></criteria-value-input>
+
+<mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close>Close</button>
+  <button mat-raised-button [mat-dialog-close]="criteriaValue">Add</button>
+</mat-dialog-actions>
+

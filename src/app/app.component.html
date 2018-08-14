@@ -1,0 +1,147 @@
+<script src="components/input/data/data.component.ts"></script>
+<div class="wrapper">
+  <div class="menu">
+    <mat-toolbar color="primary">
+      <button mat-icon-button [matMenuTriggerFor]="appMenu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #appMenu="matMenu">
+        <button mat-menu-item (click)="openDirectory()">Open</button>
+        <button mat-menu-item (click)="close()">Exit</button>
+      </mat-menu>
+      <span>Ultimate comparison UI</span>
+    </mat-toolbar>
+  </div>
+  <div class="main-content">
+    <mat-vertical-stepper (selectionChange)="stepperIndex = $event.selectedIndex">
+      <mat-step label="Select main configuration">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Select title" [(ngModel)]="configuration.title" (ngModelChange)="change()">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Select subtitle" [ngModel]="configuration.subtitle" (ngModelChange)="change()">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Select criteria filter title" [ngModel]="configuration.selectTitle"
+                 (ngModelChange)="change()">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Select table title" [ngModel]="configuration.tableTitle"
+                 (ngModelChange)="change()">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Select repository" [ngModel]="configuration.repository"
+                 (ngModelChange)="change()">
+        </mat-form-field>
+      </mat-step>
+
+      <mat-step label="Select detail configuration">
+        <mat-form-field class="full-width">
+          <mat-select [(ngModel)]="configuration.details.header.nameRef" (ngModelChange)="change()"
+                      placeholder="Select header name reference">
+            <mat-option *ngFor="let criteria of configuration.criteria" [value]="criteria.id"
+                        [disabled]="criteria.type !== 'TEXT' && criteria.type !== 'NAME_URL'">
+              {{criteria.name || criteria.id}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-select [(ngModel)]="configuration.details.header.labelRef" (ngModelChange)="change()"
+                      placeholder="Select header label reference">
+            <mat-option *ngFor="let criteria of configuration.criteria" [value]="criteria.id"
+                        [disabled]="criteria.type !== 'LABEL' && criteria.type !== 'REPOSITORY'">
+              {{criteria.name || criteria.id}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-select [(ngModel)]="configuration.details.header.urlRef" (ngModelChange)="change()"
+                      placeholder="Select header url reference">
+            <mat-option *ngFor="let criteria of configuration.criteria" [value]="criteria.id"
+                        [disabled]="criteria.type!=='NAME_URL'">
+              {{criteria.name || criteria.id}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <section class="checkbox-group">
+          <mat-checkbox [(ngModel)]="configuration.details.tooltipAsText" (change)="change()" [labelPosition]="'after'"
+                        class="checkbox-margin">
+            Tooltip as text
+          </mat-checkbox>
+        </section>
+      </mat-step>
+
+      <mat-step label="Select description">
+        <markdown-input [(value)]="description" (valueChange)="change()"></markdown-input>
+      </mat-step>
+
+      <mat-step label="Select citation files">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Select csl file name" [(ngModel)]="configuration.citationFiles.csl"
+                 (ngModelChange)="change()">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Select bibtex file name" [(ngModel)]="configuration.citationFiles.bib"
+                 (ngModelChange)="change()">
+        </mat-form-field>
+      </mat-step>
+
+      <mat-step label="Select criteria">
+        <criteria-array-input class="input" [(value)]="configuration.criteria"
+                              [defaultConfiguration]="defaultConfiguration"
+                              (valueChange)="change($event)"></criteria-array-input>
+      </mat-step>
+
+      <mat-step label="Select data">
+        <data-array-input *ngIf="stepperIndex === 5"
+                          class="input" [(value)]="data.dataElements"
+                          [configuration]="configuration"
+                          (valueChange)="change($event)"></data-array-input>
+
+      </mat-step>
+
+
+      <mat-step label="Check result">
+        <ng-template [ngIf]="stepperIndex === 6">
+          <h2>configuration.yml</h2>
+          <pre class="yaml"><code [innerHTML]="configurationYaml"></code></pre>
+          <h2>description.md</h2>
+          <mat-card *ngIf="description && description.length > 0">
+            <pre><code>{{description}}</code></pre>
+          </mat-card>
+          <h2>data files</h2>
+          <ng-template ngFor let-dataElement [ngForOf]="data.dataElements">
+            <mat-card class="space-after">
+              <pre class="markdown"><code>{{dataElement.markdown()}}</code></pre>
+            </mat-card>
+          </ng-template>
+        </ng-template>
+      </mat-step>
+
+      <mat-step label="Save">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Select file path" [(ngModel)]="filePath" (click)="selectFilePath()">
+        </mat-form-field>
+        <button mat-raised-button (click)="save()">Save Files</button>
+        <div style="padding-top: 10px">
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header [collapsedHeight]="'25px'" [expandedHeight]="'25px'">
+                <mat-panel-title>Extended</mat-panel-title>
+                <mat-panel-description>Additional settings</mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <section class="checkbox-group-column">
+                Force reset if file exists
+                <mat-checkbox *ngFor="let file of requiredFiles;" [(ngModel)]="file[2]" [labelPosition]="'after'"
+                              class="checkbox-margin">
+                  {{file[0]}}
+                </mat-checkbox>
+              </section>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </mat-step>
+    </mat-vertical-stepper>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<mat-toolbar>
+  <span>Criteria</span>
+  <div class="button-row header-button-row">
+    <button mat-button (click)="addNewCriteriaDialog()">Add new criteria</button>
+  </div>
+</mat-toolbar>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let criteria of value; let index = index" (opened)="_open[index]=true"
+                       (closed)="_open[index]=false" [expanded]="_open[index]">
+    <mat-expansion-panel-header (click)="update()">
+      <mat-panel-title>{{criteria.id}}</mat-panel-title>
+      <mat-panel-description>Select settings for {{criteria.name || criteria.id}}</mat-panel-description>
+    </mat-expansion-panel-header>
+    <section class="mat-section">
+      <label>Change Position:</label>
+      <div class="button-row">
+        <button mat-icon-button [disabled]="index===0">
+          <mat-icon aria-label="Move up" (click)="move(index, index-1)">keyboard_arrow_up</mat-icon>
+        </button>
+        <button mat-icon-button [disabled]="index+1===value.length">
+          <mat-icon aria-label="Move down" (click)="move(index, index+1)">keyboard_arrow_down</mat-icon>
+        </button>
+      </div>
+    </section>
+    <criteria-input [value]="criteria" [type]="criteria.type"
+                    (valueChange)="value[i]=$event; change();"></criteria-input>
+    <section class="mat-section">
+      <label>Delete criteria</label>
+      <button mat-icon-button [disabled]="criteria.id === 'id' || criteria.id === 'description'"
+              (click)="delete(index)">
+        <mat-icon aria-label="Delete">delete</mat-icon>
+      </button>
+    </section>
+  </mat-expansion-panel>
+</mat-accordion>
+
+
